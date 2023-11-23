@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  petexpress:
+    image: petexpress
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - ./src:/usr/app/src
+  postgres:
+    image: postgres
+    container_name: pg_sql
+    restart: on-failure
+    volumes:
+      - ./deploy/psql_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=aboutfood
+      - POSTGRES_USER=yakov
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5432:5432"
